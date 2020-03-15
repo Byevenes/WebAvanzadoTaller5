@@ -3,7 +3,20 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Product = require('./modelos/product');
+const PersonaController = require('./controladores/personaController');
+
 const app = express();
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept'
+  );
+  res.header('Access-Control-Allow-Methods', 'GET POST, OPTIONS, PUT, DELETE');
+  res.header('Allow', 'GET, POST OPTIONS, PUT, DELETE');
+  next();
+});
 
 app.use(
   bodyParser.urlencoded({
@@ -13,6 +26,10 @@ app.use(
   })
 );
 app.use(bodyParser.json());
+
+app.post('/persona', PersonaController.creaPersona);
+
+app.get('personas', PersonaController.listarpersonas);
 
 app.get('/hola', (req, res) => {
   res.status(200).send({ message: 'Bienvenido' });
@@ -116,8 +133,8 @@ mongoose.connect(
     if (err) throw err;
     console.log('Conexion establecida');
 
-    app.listen(3000, () => {
-      console.log('Esta corriendo en puerto 3000');
+    app.listen(8000, () => {
+      console.log('Esta corriendo en puerto 8000');
     });
   }
 );

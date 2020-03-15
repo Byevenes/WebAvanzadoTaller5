@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 
 app.post('/persona', PersonaController.creaPersona);
 
-app.get('personas', PersonaController.listarpersonas);
+app.get('/personas', PersonaController.listarpersonas);
 
 app.get('/hola', (req, res) => {
   res.status(200).send({ message: 'Bienvenido' });
